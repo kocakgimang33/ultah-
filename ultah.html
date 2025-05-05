@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Surprise Ulang Tahun</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffe4e1, #fff0f5);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 30px;
+      color: #ff1493;
+    }
+
+    .gift-box {
+      width: 200px;
+      height: 200px;
+      background: #ff69b4;
+      margin: 50px auto;
+      position: relative;
+      border-radius: 20px;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .gift-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 90px;
+      width: 20px;
+      height: 100%;
+      background: #fff;
+    }
+
+    .ribbon {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff1493;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    #input-area {
+      display: none;
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 10px;
+      border: 2px solid #ff69b4;
+      width: 250px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #ff1493;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .message {
+      display: none;
+      background-color: #fff;
+      border: 5px dashed #ff69b4;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 800px;
+      margin: 30px auto;
+      box-shadow: 0 0 20px rgba(255,105,180,0.5);
+      color: #333;
+      animation: fadeIn 2s ease-in-out;
+      position: relative;
+      z-index: 10;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cake {
+      font-size: 50px;
+      animation: float 2s infinite;
+      margin-bottom: 10px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .confetti {
+      font-size: 30px;
+    }
+
+    .footer {
+      font-weight: bold;
+      margin-top: 20px;
+      color: #ff1493;
+    }
+
+    /* Emoji jatuh */
+    .falling-emoji {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px); }
+      100% { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Ketuk Hadiah dari Semesta!</h1>
+
+  <div class="gift-box" onclick="openBox()">
+    <div class="ribbon">Kejutan!</div>
+  </div>
+
+  <div id="input-area">
+    <p>Masukkan Nama & Harapanmu di Tahun Ini:</p>
+    <input type="text" id="name" placeholder="Nama Kamu">
+    <input type="text" id="wish" placeholder="Harapan Tahun Ini">
+    <br>
+    <button onclick="showMessage()">Lihat Surat Ulang Tahun</button>
+  </div>
+
+  <div class="message" id="birthday-message">
+    <div class="cake">🎂</div>
+    <div class="confetti">🎉🎈🎊✨🎁</div>
+    <p id="dynamic-name"></p>
+    <p>
+       SELAMAT ULANG TAHUN YAAA 🎂🥳,
+    </p>
+    <p>
+     SEMOGA KAMU PANJANG UMUR DAN DI BERI KESEHATAN SEKELUARGA 🤲,
+    </p>
+    <p>
+      oiyaa maaf yaa gabisa kasih kamu apa apaa, aku cuma bisa kasih ini doang buat kado ulang tahun kamuu.
+    </p>
+    <p>
+      Yaudaa yaa aku cuma mau nyampein ini doang, maaf kaloo kata kataku ada yang salah/nyakitin hati kamuu, sekali lagii aku ucapin
+    </p>
+    <p>
+       happy birthday ex, be happy 💓💓
+    </p>
+    <p class="footer">DARI SEMESTA 🕊️</p>
+    <div class="confetti">🎁✨🎈🎊🎉</div>
+  </div>
+
+  <audio id="music" src="https://www.bensound.com/bensound-music/bensound-buddy.mp3" autoplay loop></audio>
+
+  <script>
+    function openBox() {
+      document.querySelector('.gift-box').style.display = 'none';
+      document.getElementById('input-area').style.display = 'block';
+    }
+
+    function showMessage() {
+      const name = document.getElementById('name').value || "Sahabat Hebat";
+      const wish = document.getElementById('wish').value || "jadi lebih baik";
+
+      document.getElementById('input-area').style.display = 'none';
+      document.getElementById('birthday-message').style.display = 'block';
+      document.getElementById('dynamic-name').textContent = `Hai ${name}, semoga harapanmu "${wish}" segera tercapai ya!`;
+
+      // Tambahkan emoji jatuh
+      for (let i = 0; i < 50; i++) {
+        let emoji = document.createElement("div");
+        emoji.className = "falling-emoji";
+        emoji.textContent = ["🎉", "🎈", "🎁", "✨", "💖"][Math.floor(Math.random() * 5)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(emoji);
+      }
+    }
+  </script>
+
+</body>
+</html>
